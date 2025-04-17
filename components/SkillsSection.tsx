@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useRef } from "react";
 import { AnimationProps } from "@/app/interface";
 import Image from "next/image";
@@ -15,6 +13,7 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
   const marqueeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Marquee animation for icons
     const marquee = marqueeRef.current;
 
     if (marquee) {
@@ -25,7 +24,7 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
       // Get the width of half the content (original set of icons)
       const halfWidth = marquee.scrollWidth / 2;
 
-      // Create the infinite animation
+      // Create the infinite animation for the marquee
       const tl = gsap.timeline({ repeat: -1 });
       tl.to(marquee, {
         x: -halfWidth,
@@ -45,12 +44,12 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
 
   return (
     <section
-      className={`h-screen text-white ${className} flex justify-center w-full`}
+      className={`h-screen text-white ${className} flex justify-center w-full `}
       id="skills"
     >
       <div className="h-full w-[80%] flex-col p-12 space-y-10">
         <div className="flex flex-col gap-12 w-full items-center">
-          <p className="text-6xl font-bold">Skills.</p>
+          <p className="text-6xl font-bold">{`{Skills}`}</p>
           <div className="grid grid-cols-3 gap-8 w-full ">
             {/* Front-End */}
             <div className="flex flex-col items-center gap-2">
@@ -74,7 +73,7 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
                 <p className="text-sm text-center">
                   Crafting responsive and interactive user interfaces using
                   HTML, CSS, JavaScript, and frameworks like React, Typescript,
-                  Next and Vue.
+                  Next, and Vue.
                 </p>
               </div>
             </div>
