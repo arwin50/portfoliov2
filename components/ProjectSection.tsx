@@ -71,15 +71,15 @@ export const ProjectSection: React.FC<AnimationProps> = ({ className }) => {
 
   return (
     <section
-      className={`min-h-screen text-white ${className} w-full relative py-20 px-4 md:px-8 `}
+      className={`min-h-screen text-foreground ${className} w-full relative py-20 px-4 md:px-8`}
       id="projects"
     >
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--muted)_1px,transparent_1px),linear-gradient(to_bottom,var(--muted)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
       <div className="w-[80%] mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">My Projects</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Here are some of the projects I've worked on. Each one represents a
             unique challenge and learning experience.
           </p>
@@ -97,7 +97,7 @@ export const ProjectSection: React.FC<AnimationProps> = ({ className }) => {
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   return (
-    <div className="bg-black/20 rounded-lg overflow-hidden border flex flex-col  border-gray-600 hover:border-gray-400 transition-all duration-300 hover:shadow-xl hover:shadow-rose-500/10 group">
+    <div className="bg-card-background rounded-lg overflow-hidden border flex flex-col border-card-border hover:border-card-border/80 transition-all duration-300 hover:shadow-xl hover:shadow-rose-500/10 group">
       <div className="relative h-48 overflow-hidden">
         <img
           src={project.image || "/doorm.png"}
@@ -109,7 +109,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
 
       <div className="p-6 flex flex-col flex-1">
         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-        <p className="text-gray-400 mb-4 text-sm text-pretty">
+        <p className="text-muted-foreground mb-4 text-sm text-pretty">
           {project.description}
         </p>
 
@@ -117,7 +117,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           {project.tags.map((tag, index) => (
             <span
               key={index}
-              className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full"
+              className="text-xs bg-muted text-foreground px-2 py-1 rounded-full"
             >
               {tag}
             </span>
@@ -130,7 +130,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors"
               aria-label={`GitHub repository for ${project.title}`}
             >
               <Github size={20} />
@@ -142,7 +142,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-sm text-white hover:text-rose-400 transition-colors"
+              className="flex items-center gap-1 text-sm text-foreground hover:text-rose-400 transition-colors"
               aria-label={`Live demo for ${project.title}`}
             >
               <span>View Project</span>

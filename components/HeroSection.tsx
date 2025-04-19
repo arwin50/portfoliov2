@@ -1,5 +1,7 @@
-import React from "react";
-import { AnimationProps } from "@/app/interface";
+"use client";
+
+import type React from "react";
+import type { AnimationProps } from "@/app/interface";
 
 export const HeroSection: React.FC<AnimationProps> = ({ className }) => {
   const handleScroll = () => {
@@ -12,10 +14,10 @@ export const HeroSection: React.FC<AnimationProps> = ({ className }) => {
 
   return (
     <section
-      className={`h-screen text-white ${className} w-full relative flex justify-center items-center`}
+      className={`h-screen text-foreground ${className} w-full relative flex justify-center items-center`}
       id="about"
     >
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--muted)_1px,transparent_1px),linear-gradient(to_bottom,var(--muted)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
       <div className="flex flex-col justify-center items-center gap-2 w-[80%] max-w-[1200px] text-center">
         <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6">
           Hello, I'm{" "}

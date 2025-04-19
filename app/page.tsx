@@ -57,10 +57,10 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex flex-col min-h-screen items-center w-full bg-black/90 relative">
+    <main className="flex flex-col min-h-screen items-center w-full bg-background relative">
       <p
         id="niw"
-        className="text-white fixed top-1/2 left-1/2  opacity-0 z-220" // Centered using Tailwind CSS
+        className="text-foreground fixed top-1/2 left-1/2 opacity-0 z-50" // Centered using Tailwind CSS
       >
         {"{niw}"}
       </p>

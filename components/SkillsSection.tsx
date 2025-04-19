@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
-import { AnimationProps } from "@/app/interface";
+import type { AnimationProps } from "@/app/interface";
 import Image from "next/image";
 import gsap from "gsap";
 import { FaReact, FaNodeJs, FaHtml5, FaVuejs } from "react-icons/fa";
@@ -38,7 +40,7 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
 
   return (
     <section
-      className={`min-h-screen text-white ${className} flex justify-center w-full`}
+      className={`min-h-screen text-foreground ${className} flex justify-center w-full`}
       id="skills"
     >
       <div className="w-[90%] xl:w-[80%] flex-col py-12 px-4 md:px-12 space-y-10">
@@ -53,21 +55,21 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
                   alt="monitor"
                   width={300}
                   height={300}
-                  className="h-full w-auto"
+                  className="h-full w-auto "
                 />
                 <Image
                   src="/carbon-2.png"
                   alt="frontend-code"
                   width={282}
                   height={300}
-                  className="absolute top-2 h-[60%] w-[94%]  lg:h-[185px]"
+                  className="absolute top-2 h-[60%] w-[94%] lg:h-[185px]"
                 />
               </div>
               <div className="flex flex-col items-center gap-4 justify-center px-2 text-center">
                 <p className="text-xl md:text-2xl font-bold">
                   Front-end Development
                 </p>
-                <p className="text-sm">
+                <p className="text-muted-foreground text-sm">
                   Crafting responsive and interactive user interfaces using
                   HTML, CSS, JavaScript, and frameworks like React, Typescript,
                   Next, and Vue.
@@ -83,13 +85,13 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
                   alt="others"
                   width={280}
                   height={280}
-                  className="h-full w-auto scale-90 self-start"
+                  className="h-full w-auto scale-90 self-start "
                 />
               </div>
               <div className="flex flex-col items-center gap-4 px-2 text-center">
                 <p className="text-xl md:text-2xl font-bold">Coding Approach</p>
-                <p className="text-sm">
-                  I’m comfortable working in agile environments and adapting
+                <p className="text-muted-foreground text-sm">
+                  I'm comfortable working in agile environments and adapting
                   quickly to changes. I focus on writing responsive and clean,
                   efficient code.
                 </p>
@@ -104,7 +106,7 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
                   alt="monitor"
                   width={300}
                   height={300}
-                  className="h-full w-auto"
+                  className="h-full w-auto "
                 />
                 <Image
                   src="/backend.png"
@@ -118,7 +120,7 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
                 <p className="text-xl md:text-2xl font-bold">
                   Back-end Development
                 </p>
-                <p className="text-sm md:w-[65%] lg:w-auto">
+                <p className="text-muted-foreground text-sm md:w-[65%] lg:w-auto">
                   I build and maintain server-side logic using Node.js and
                   Express, with MongoDB and MySQL database management.
                 </p>
@@ -139,7 +141,7 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
                   <FaReact className="text-cyan-400" />
                   <CgFigma className="text-pink-500" />
                   <FaNodeJs className="text-green-500" />
-                  <RiNextjsFill className="text-white" />
+                  <RiNextjsFill className="text-foreground" />
                   <FaHtml5 className="text-orange-500" />
                   <FaVuejs className="text-green-400" />
                   <TbBrandMongodb className="text-green-500" />

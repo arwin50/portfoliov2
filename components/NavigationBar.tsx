@@ -4,8 +4,11 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react"; // icons for open/close
 import type { AnimationProps } from "@/app/interface";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { useTheme } from "@/components/theme-provider";
 
 export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
+  const { theme } = useTheme();
   const [activeLink, setActiveLink] = useState("about");
   const [isScrolling, setIsScrolling] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -64,7 +67,7 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
 
     const throttledScroll = () => {
       if (scrollTimeout) clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(handleScroll, 100);
+      scrollTimeout = setTimeout(handleScroll, 20);
     };
 
     window.addEventListener("scroll", throttledScroll);
@@ -82,7 +85,7 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
     <>
       {/* Desktop Nav */}
       <nav
-        className={`hidden md:flex flex-col mr-5 gap-4 justify-evenly items-end p-2 text-gray-500 fixed z-10 top-1/2 right-0 transform -translate-y-1/2 text-sm ${className}`}
+        className={`hidden md:flex flex-col mr-5 gap-4 justify-evenly items-end p-2 text-muted-foreground fixed z-10 top-1/2 right-0 transform -translate-y-1/2 text-sm ${className}`}
       >
         {navLinks.map((link) => (
           <Link
@@ -91,8 +94,8 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
             onClick={(e) => handleNavClick(e, link)}
             className={`transition-all duration-300 ${
               activeLink === link
-                ? "text-white scale-110 font-medium"
-                : "hover:text-gray-300"
+                ? "text-foreground scale-110 font-medium"
+                : "hover:text-foreground/80"
             }`}
           >
             {link.charAt(0).toUpperCase() + link.slice(1)}
@@ -100,19 +103,29 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
         ))}
       </nav>
 
+      {/* Theme Toggle - Desktop */}
+      <div className="hidden md:block fixed top-6 right-6 z-50 section opacity-0">
+        <ThemeToggle />
+      </div>
+
       {/* Mobile Menu Button */}
-      <button
-        className="md:hidden fixed top-[6.5%] right-[40px] z-210 text-white section opacity-0"
-        onClick={() => setMenuOpen((prev) => !prev)}
-        aria-label="Toggle Menu"
-      >
-        {menuOpen ? <X size={28} /> : <Menu size={28} />}
-      </button>
+      <div className="md:hidden fixed top-[6.5%] right-[40px] z-50 flex items-center gap-3 section opacity-0 cursor-pointer">
+        <ThemeToggle />
+        <button
+          onClick={() => setMenuOpen((prev) => !prev)}
+          aria-label="Toggle Menu"
+          className="text-foreground cursor-pointer"
+        >
+          {menuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </div>
 
       {/* Mobile Menu Overlay */}
       {menuOpen && (
         <div
-          className={`md:hidden fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center space-y-8 text-white text-2xl z-200 transition-all duration-500 ease-in-out transform ${
+          className={`md:hidden fixed inset-0 ${
+            theme === "dark" ? "bg-black" : "bg-white"
+          } flex flex-col items-center justify-center space-y-8 text-foreground text-2xl z-40 transition-all duration-500 ease-in-out transform ${
             menuOpen
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-full pointer-events-none"

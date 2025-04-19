@@ -3,6 +3,7 @@
 import type React from "react";
 import { useState } from "react";
 import { Github, Linkedin, Mail, Send, Instagram } from "lucide-react";
+import { useTheme } from "@/components/theme-provider";
 
 export const ContactSection: React.FC<{ className?: string }> = ({
   className,
@@ -13,6 +14,7 @@ export const ContactSection: React.FC<{ className?: string }> = ({
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { theme } = useTheme();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -36,9 +38,26 @@ export const ContactSection: React.FC<{ className?: string }> = ({
     console.log("Form submitted:", formData);
   };
 
+  // Define input styles with better contrast for both themes
+  const inputClasses = `
+    bg-card-background 
+    border-2 
+    border-input-border 
+    text-foreground 
+    w-full 
+    p-3 
+    rounded-md 
+    focus:outline-none 
+    focus:ring-2 
+    focus:ring-input-focus 
+    focus:border-transparent 
+    transition-all
+    placeholder:text-muted-foreground
+  `;
+
   return (
     <section
-      className={`min-h-screen text-white ${className} flex justify-center w-full items-center `}
+      className={`min-h-screen text-foreground ${className} flex justify-center w-full items-center`}
       id="contact"
     >
       <div className="container mx-auto px-4 py-8 md:py-16 w-[80%]">
@@ -47,7 +66,7 @@ export const ContactSection: React.FC<{ className?: string }> = ({
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Get In Touch
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-muted-foreground mb-8">
               Have a project in mind or just want to say hello? Feel free to
               reach out!
             </p>
@@ -69,7 +88,11 @@ export const ContactSection: React.FC<{ className?: string }> = ({
                   onChange={handleChange}
                   placeholder="Your name"
                   required
-                  className="bg-gray-800/50 border-gray-700 text-white w-full p-3 rounded-md"
+                  className={inputClasses}
+                  style={{
+                    // Ensure good text contrast in both themes
+                    color: theme === "dark" ? "#ffffff" : "#000000",
+                  }}
                 />
               </div>
               <div>
@@ -87,7 +110,11 @@ export const ContactSection: React.FC<{ className?: string }> = ({
                   onChange={handleChange}
                   placeholder="your.email@example.com"
                   required
-                  className="bg-gray-800/50 border-gray-700 text-white w-full p-3 rounded-md"
+                  className={inputClasses}
+                  style={{
+                    // Ensure good text contrast in both themes
+                    color: theme === "dark" ? "#ffffff" : "#000000",
+                  }}
                 />
               </div>
             </div>
@@ -105,7 +132,12 @@ export const ContactSection: React.FC<{ className?: string }> = ({
                 onChange={handleChange}
                 placeholder="Your message here..."
                 required
-                className="min-h-[150px] bg-gray-800/50 border-gray-700 text-white w-full p-3 rounded-md"
+                className={inputClasses}
+                style={{
+                  // Ensure good text contrast in both themes
+                  color: theme === "dark" ? "#ffffff" : "#000000",
+                  minHeight: "150px",
+                }}
               />
             </div>
             <button
@@ -152,7 +184,7 @@ export const ContactSection: React.FC<{ className?: string }> = ({
                 href="https://github.com/arwin50"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Github className="h-6 w-6" />
                 <span className="sr-only">GitHub</span>
@@ -161,7 +193,7 @@ export const ContactSection: React.FC<{ className?: string }> = ({
                 href="https://www.linkedin.com/in/arwin-delasan-8b4333255/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Linkedin className="h-6 w-6" />
                 <span className="sr-only">LinkedIn</span>
@@ -170,7 +202,7 @@ export const ContactSection: React.FC<{ className?: string }> = ({
                 href="https://www.instagram.com/powchulis/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Instagram className="h-6 w-6" />
                 <span className="sr-only">Instagram</span>
@@ -179,7 +211,7 @@ export const ContactSection: React.FC<{ className?: string }> = ({
                 href="mailto:delasanarwin@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Mail className="h-6 w-6" />
                 <span className="sr-only">Email</span>
