@@ -65,7 +65,7 @@ export default function Home() {
           router.push("/");
         }}
         id="niw"
-        className="text-foreground fixed top-1/2 left-1/2 opacity-0 z-50 cursor-pointer hover:animate-pulse-scale" // Centered using Tailwind CSS
+        className="text-foreground fixed top-1/2 left-1/2 opacity-0 z-50 cursor-pointer " // Centered using Tailwind CSS
       >
         {"{niw}"}
       </p>
