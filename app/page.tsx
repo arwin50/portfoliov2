@@ -5,9 +5,11 @@ import { SkillsSection } from "@/components/SkillsSection";
 import { ProjectSection } from "@/components/ProjectSection";
 import { ContactSection } from "@/components/ContactSection";
 import { NavigationBar } from "@/components/NavigationBar";
+import { useRouter } from "next/navigation";
 import gsap from "gsap";
 
 export default function Home() {
+  const router = useRouter();
   useEffect(() => {
     // Animate the "niw" element
     const niwElement = document.getElementById("niw");
@@ -59,8 +61,11 @@ export default function Home() {
   return (
     <main className="flex flex-col min-h-screen items-center w-full bg-background relative">
       <p
+        onClick={() => {
+          router.push("/");
+        }}
         id="niw"
-        className="text-foreground fixed top-1/2 left-1/2 opacity-0 z-50" // Centered using Tailwind CSS
+        className="text-foreground fixed top-1/2 left-1/2 opacity-0 z-50 cursor-pointer hover:animate-pulse-scale" // Centered using Tailwind CSS
       >
         {"{niw}"}
       </p>

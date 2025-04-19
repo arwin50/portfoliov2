@@ -130,7 +130,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors hover:animate-pulse-scale"
               aria-label={`GitHub repository for ${project.title}`}
             >
               <Github size={20} />

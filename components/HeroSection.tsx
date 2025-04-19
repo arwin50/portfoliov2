@@ -31,7 +31,7 @@ export const HeroSection: React.FC<AnimationProps> = ({ className }) => {
           <span className="italic">learning</span>, and{" "}
           <span className="font-bold">solving</span> real-world problems with
           code.
-        </p>
+        </p>  
         {/* Connect Button */}
         <button
           onClick={handleScroll}
