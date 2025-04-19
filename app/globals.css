@@ -30,6 +30,16 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@keyframes pulse-scale {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
 /* Add Tailwind utilities for muted colors */
 @layer utilities {
   .bg-muted {
@@ -43,6 +53,10 @@ body {
   }
   .border-muted {
     border-color: var(--muted);
+  }
+
+  .hover\:animate-pulse-scale:hover {
+    animation: pulse-scale 0.6s ease-in-out;
   }
 }
 

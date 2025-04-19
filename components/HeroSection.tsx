@@ -35,7 +35,7 @@ export const HeroSection: React.FC<AnimationProps> = ({ className }) => {
         {/* Connect Button */}
         <button
           onClick={handleScroll}
-          className="w-fit mt-4 py-3 px-6 text-xl font-semibold text-white bg-gradient-to-r from-rose-500 to-orange-500 rounded-full hover:bg-gradient-to-l transition-all duration-500 cursor-pointer z-10"
+          className="w-fit mt-4 py-3 px-6 text-xl font-semibold text-white bg-gradient-to-r from-rose-500 to-orange-500 rounded-full hover:bg-gradient-to-l transition-all duration-500 cursor-pointer z-10 hover:animate-pulse-scale"
         >
           Connect
         </button>

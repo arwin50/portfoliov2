@@ -142,7 +142,7 @@ export const ContactSection: React.FC<{ className?: string }> = ({
             </div>
             <button
               type="submit"
-              className="w-full px-8 py-2 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white rounded-md flex justify-center items-center cursor-pointer transition-colors duration-300"
+              className="w-full px-8 py-2 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white rounded-md flex justify-center items-center cursor-pointer transition-colors duration-300 hover:animate-pulse-scale"
               disabled={isSubmitting}
             >
               {isSubmitting ? (
