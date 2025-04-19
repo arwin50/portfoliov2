@@ -2,20 +2,20 @@
 import type React from "react";
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { Menu, X } from "lucide-react"; // icons for open/close
 import type { AnimationProps } from "@/app/interface";
 
 export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
   const [activeLink, setActiveLink] = useState("about");
   const [isScrolling, setIsScrolling] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Improved scroll detection with debounce
   const handleScroll = useCallback(() => {
     if (isScrolling) return;
 
     const sections = ["about", "skills", "projects", "contact"];
     const scrollPosition = window.scrollY;
 
-    // Find the section that takes up most of the viewport
     let maxVisibleSection = "";
     let maxVisibleAmount = 0;
 
@@ -25,7 +25,6 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
         const rect = element.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
-        // Calculate how much of the section is visible in the viewport
         const visibleTop = Math.max(0, rect.top);
         const visibleBottom = Math.min(windowHeight, rect.bottom);
         const visibleHeight = Math.max(0, visibleBottom - visibleTop);
@@ -42,32 +41,25 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
     }
   }, [activeLink, isScrolling]);
 
-  // Handle smooth scrolling when clicking navigation links
   const handleNavClick = (e: React.MouseEvent, section: string) => {
-    e.preventDefault(); // Prevent default hash navigation
+    e.preventDefault();
     setActiveLink(section);
     setIsScrolling(true);
+    setMenuOpen(false); // close menu when clicking
 
-    // Manually scroll to the section
     const element = document.getElementById(section);
     if (element) {
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+      const offsetPosition =
+        element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
     }
 
-    // Disable scroll detection for longer to ensure animation completes
     setTimeout(() => {
       setIsScrolling(false);
     }, 1200);
   };
 
   useEffect(() => {
-    // Throttle scroll event for better performance
     let scrollTimeout: NodeJS.Timeout;
 
     const throttledScroll = () => {
@@ -76,7 +68,7 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
     };
 
     window.addEventListener("scroll", throttledScroll);
-    handleScroll(); // Initial call
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", throttledScroll);
@@ -84,54 +76,62 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
     };
   }, [handleScroll]);
 
+  const navLinks = ["about", "skills", "projects", "contact"];
+
   return (
-    <nav
-      className={`flex flex-col mr-5 gap-4 justify-evenly items-end p-2 text-gray-500 fixed z-10 top-1/2 right-0 transform -translate-y-1/2 text-sm ${className}`}
-    >
-      <Link
-        href="#about"
-        onClick={(e) => handleNavClick(e, "about")}
-        className={`transition-all duration-300 ${
-          activeLink === "about"
-            ? "text-white scale-110 font-medium"
-            : "hover:text-gray-300"
-        }`}
+    <>
+      {/* Desktop Nav */}
+      <nav
+        className={`hidden md:flex flex-col mr-5 gap-4 justify-evenly items-end p-2 text-gray-500 fixed z-10 top-1/2 right-0 transform -translate-y-1/2 text-sm ${className}`}
       >
-        About
-      </Link>
-      <Link
-        href="#skills"
-        onClick={(e) => handleNavClick(e, "skills")}
-        className={`transition-all duration-300 ${
-          activeLink === "skills"
-            ? "text-white scale-110 font-medium"
-            : "hover:text-gray-300"
-        }`}
+        {navLinks.map((link) => (
+          <Link
+            key={link}
+            href={`#${link}`}
+            onClick={(e) => handleNavClick(e, link)}
+            className={`transition-all duration-300 ${
+              activeLink === link
+                ? "text-white scale-110 font-medium"
+                : "hover:text-gray-300"
+            }`}
+          >
+            {link.charAt(0).toUpperCase() + link.slice(1)}
+          </Link>
+        ))}
+      </nav>
+
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden fixed top-[6.5%] right-[40px] z-210 text-white section opacity-0"
+        onClick={() => setMenuOpen((prev) => !prev)}
+        aria-label="Toggle Menu"
       >
-        Skills
-      </Link>
-      <Link
-        href="#projects"
-        onClick={(e) => handleNavClick(e, "projects")}
-        className={`transition-all duration-300 ${
-          activeLink === "projects"
-            ? "text-white scale-110 font-medium"
-            : "hover:text-gray-300"
-        }`}
-      >
-        Projects
-      </Link>
-      <Link
-        href="#contact"
-        onClick={(e) => handleNavClick(e, "contact")}
-        className={`transition-all duration-300 ${
-          activeLink === "contact"
-            ? "text-white scale-110 font-medium"
-            : "hover:text-gray-300"
-        }`}
-      >
-        Contact
-      </Link>
-    </nav>
+        {menuOpen ? <X size={28} /> : <Menu size={28} />}
+      </button>
+
+      {/* Mobile Menu Overlay */}
+      {menuOpen && (
+        <div
+          className={`md:hidden fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center space-y-8 text-white text-2xl z-200 transition-all duration-500 ease-in-out transform ${
+            menuOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-full pointer-events-none"
+          }`}
+        >
+          {navLinks.map((link) => (
+            <Link
+              key={link}
+              href={`#${link}`}
+              onClick={(e) => handleNavClick(e, link)}
+              className={`transition-all duration-300 ${
+                activeLink === link ? "font-bold underline" : ""
+              }`}
+            >
+              {link.charAt(0).toUpperCase() + link.slice(1)}
+            </Link>
+          ))}
+        </div>
+      )}
+    </>
   );
 };

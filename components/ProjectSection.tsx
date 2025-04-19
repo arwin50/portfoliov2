@@ -97,7 +97,7 @@ export const ProjectSection: React.FC<AnimationProps> = ({ className }) => {
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   return (
-    <div className="bg-black/20 rounded-lg overflow-hidden border flex flex-col justify-between border-gray-600 hover:border-gray-400 transition-all duration-300 hover:shadow-xl hover:shadow-rose-500/10 group">
+    <div className="bg-black/20 rounded-lg overflow-hidden border flex flex-col  border-gray-600 hover:border-gray-400 transition-all duration-300 hover:shadow-xl hover:shadow-rose-500/10 group">
       <div className="relative h-48 overflow-hidden">
         <img
           src={project.image || "/doorm.png"}
@@ -107,13 +107,13 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-rose-500/10 to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-300"></div>
       </div>
 
-      <div className="p-6">
+      <div className="p-6 flex flex-col flex-1">
         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
         <p className="text-gray-400 mb-4 text-sm text-pretty">
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2 mb-4 mt-auto">
           {project.tags.map((tag, index) => (
             <span
               key={index}

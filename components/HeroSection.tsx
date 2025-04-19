@@ -9,21 +9,21 @@ export const HeroSection: React.FC<AnimationProps> = ({ className }) => {
       contactSection.scrollIntoView({ behavior: "smooth" });
     }
   };
+
   return (
     <section
-      className={`h-screen text-white ${className} w-full relative flex justify-center `}
+      className={`h-screen text-white ${className} w-full relative flex justify-center items-center`}
       id="about"
     >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-      <div className="flex flex-col justify-center h-full gap-2 w-[80%]">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+      <div className="flex flex-col justify-center items-center gap-2 w-[80%] max-w-[1200px] text-center">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6">
           Hello, I'm{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-500">
-            Arwin <br />
-            Delasan.
+            Arwin Delasan.
           </span>
         </h1>
-        <p className="text-3xl">
+        <p className="text-xl md:text-2xl lg:text-3xl">
           A Full Stack Developer who loves{" "}
           <span className="text-red-400">building</span>,{" "}
           <span className="italic">learning</span>, and{" "}
@@ -33,7 +33,7 @@ export const HeroSection: React.FC<AnimationProps> = ({ className }) => {
         {/* Connect Button */}
         <button
           onClick={handleScroll}
-          className="w-fit mt-6 py-3 px-6 text-xl font-semibold text-white bg-gradient-to-r from-rose-500 to-orange-500 rounded-full hover:bg-gradient-to-l transition-all duration-500 cursor-pointer z-10 "
+          className="w-fit mt-4 py-3 px-6 text-xl font-semibold text-white bg-gradient-to-r from-rose-500 to-orange-500 rounded-full hover:bg-gradient-to-l transition-all duration-500 cursor-pointer z-10"
         >
           Connect
         </button>

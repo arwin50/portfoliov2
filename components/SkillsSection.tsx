@@ -13,18 +13,13 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
   const marqueeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Marquee animation for icons
     const marquee = marqueeRef.current;
-
     if (marquee) {
-      // Create a duplicate of the icons for seamless looping
       const originalIcons = marquee.innerHTML;
       marquee.innerHTML = originalIcons + originalIcons;
 
-      // Get the width of half the content (original set of icons)
       const halfWidth = marquee.scrollWidth / 2;
 
-      // Create the infinite animation for the marquee
       const tl = gsap.timeline({ repeat: -1 });
       tl.to(marquee, {
         x: -halfWidth,
@@ -37,40 +32,42 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
     }
 
     return () => {
-      // Clean up animation when component unmounts
       gsap.killTweensOf(marqueeRef.current);
     };
   }, []);
 
   return (
     <section
-      className={`h-screen text-white ${className} flex justify-center w-full `}
+      className={`min-h-screen text-white ${className} flex justify-center w-full`}
       id="skills"
     >
-      <div className="h-full w-[80%] flex-col p-12 space-y-10">
+      <div className="w-[90%] xl:w-[80%] flex-col py-12 px-4 md:px-12 space-y-10">
         <div className="flex flex-col gap-12 w-full items-center">
-          <p className="text-6xl font-bold">{`{Skills}`}</p>
-          <div className="grid grid-cols-3 gap-8 w-full ">
+          <p className="text-4xl md:text-5xl xl:text-6xl font-bold">{`{Skills}`}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 w-full">
             {/* Front-End */}
-            <div className="flex flex-col items-center gap-2">
-              <div className="relative flex justify-center h-[300px]">
+            <div className="flex flex-col items-center gap-4">
+              <div className="relative flex justify-center h-[200px] md:h-[250px] lg:h-[300px]">
                 <Image
                   src="/Monitor_white.svg"
                   alt="monitor"
                   width={300}
                   height={300}
+                  className="h-full w-auto"
                 />
                 <Image
                   src="/carbon-2.png"
                   alt="frontend-code"
                   width={282}
                   height={300}
-                  className="absolute top-2 h-[185px]"
+                  className="absolute top-2 h-[60%] w-[94%]  lg:h-[185px]"
                 />
               </div>
-              <div className="flex flex-col items-center gap-4">
-                <p className="text-2xl font-bold">Front-end Development</p>
-                <p className="text-sm text-center">
+              <div className="flex flex-col items-center gap-4 justify-center px-2 text-center">
+                <p className="text-xl md:text-2xl font-bold">
+                  Front-end Development
+                </p>
+                <p className="text-sm">
                   Crafting responsive and interactive user interfaces using
                   HTML, CSS, JavaScript, and frameworks like React, Typescript,
                   Next, and Vue.
@@ -79,46 +76,49 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
             </div>
 
             {/* Coding Approach */}
-            <div className="flex flex-col gap-2">
-              <div className="flex justify-center h-[300px]">
+            <div className="flex flex-col items-center gap-4">
+              <div className="flex justify-center h-[200px] md:h-[250px] lg:h-[300px]">
                 <Image
                   src="/jigsaw.png"
                   alt="others"
                   width={280}
                   height={280}
-                  className="scale-90 self-start"
+                  className="h-full w-auto scale-90 self-start"
                 />
               </div>
-              <div className="flex flex-col items-center gap-4">
-                <p className="text-2xl font-bold">Coding Approach</p>
-                <p className="text-sm text-center">
+              <div className="flex flex-col items-center gap-4 px-2 text-center">
+                <p className="text-xl md:text-2xl font-bold">Coding Approach</p>
+                <p className="text-sm">
                   I’m comfortable working in agile environments and adapting
-                  quickly to changes. I focus on writing responsive and enjoy
-                  solving problems through clean, efficient solutions.
+                  quickly to changes. I focus on writing responsive and clean,
+                  efficient code.
                 </p>
               </div>
             </div>
 
             {/* Back-End */}
-            <div className="flex flex-col items-center gap-2">
-              <div className="relative flex justify-center h-[300px]">
+            <div className="md:col-span-2 md:flex md:justify-center xl:col-span-1 flex flex-col items-center gap-4">
+              <div className="relative flex justify-center h-[200px] md:h-[250px] lg:h-[300px]">
                 <Image
                   src="/Monitor_white.svg"
                   alt="monitor"
                   width={300}
                   height={300}
+                  className="h-full w-auto"
                 />
                 <Image
                   src="/backend.png"
                   alt="backend-code"
                   width={282}
                   height={300}
-                  className="absolute top-2 h-[185px]"
+                  className="absolute top-2 h-[60%] w-[94%] lg:h-[185px]"
                 />
               </div>
-              <div className="flex flex-col items-center gap-4">
-                <p className="text-2xl font-bold">Back-end Development</p>
-                <p className="text-sm text-center">
+              <div className="flex flex-col items-center gap-4 px-2 text-center">
+                <p className="text-xl md:text-2xl font-bold">
+                  Back-end Development
+                </p>
+                <p className="text-sm md:w-[65%] lg:w-auto">
                   I build and maintain server-side logic using Node.js and
                   Express, with MongoDB and MySQL database management.
                 </p>
@@ -126,13 +126,13 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
             </div>
           </div>
         </div>
+
+        {/* Marquee */}
         <div className="flex items-center mt-8 w-full gap-6">
-          {/* Marquee Container */}
-          <div className="relative flex-1 overflow-hidden h-[80px] ">
-            {/* Marquee */}
+          <div className="relative flex-1 overflow-hidden h-[60px] md:h-[70px] xl:h-[80px]">
             <div
               ref={marqueeRef}
-              className="tech-icons whitespace-nowrap flex gap-12 text-5xl absolute left-0 top-0"
+              className="tech-icons whitespace-nowrap flex gap-12 text-3xl md:text-4xl xl:text-5xl absolute left-0 top-0"
             >
               {[...Array(4)].map((_, i) => (
                 <React.Fragment key={i}>
