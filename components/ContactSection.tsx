@@ -1,41 +1,73 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Github, Linkedin, Mail, Send, Instagram } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
+import toast from "react-hot-toast";
+import emailjs from "@emailjs/browser";
 
 export const ContactSection: React.FC<{ className?: string }> = ({
   className,
 }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { theme } = useTheme();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "delasanarwin@gmail.com",
+    message: "",
+  });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
+
+  const form = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (!form.current) {
+      console.error("Form reference is null");
+      setIsSubmitting(false);
+      return;
+    }
 
-    // Reset form
-    setFormData({ name: "", email: "", message: "" });
-    setIsSubmitting(false);
+    emailjs
+      .sendForm(
+        `${process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID}`,
+        `${process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID}`,
+        form.current,
+        {
+          publicKey: `${process.env.NEXT_PUBLIC_EMAILJS_API_KEY}`,
+        }
+      )
+      .then(
+        () => {
+          toast.success("Message sent successfully! 🚀");
 
-    // You would typically send this data to your backend or email service
-    console.log("Form submitted:", formData);
+          setFormData({
+            name: "",
+            email: "delasanarwin@gmail.com",
+            message: "",
+          });
+        },
+        (error) => {
+          console.error("FAILED...", error.text);
+          toast.error("Failed to send message. Please try again.");
+        }
+      )
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   // Define input styles with better contrast for both themes
@@ -72,52 +104,25 @@ export const ContactSection: React.FC<{ className?: string }> = ({
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Name
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your name"
-                  required
-                  className={inputClasses}
-                  style={{
-                    // Ensure good text contrast in both themes
-                    color: theme === "dark" ? "#ffffff" : "#000000",
-                  }}
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Email
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="your.email@example.com"
-                  required
-                  className={inputClasses}
-                  style={{
-                    // Ensure good text contrast in both themes
-                    color: theme === "dark" ? "#ffffff" : "#000000",
-                  }}
-                />
-              </div>
+          <form onSubmit={handleSubmit} className="space-y-6" ref={form}>
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium mb-2">
+                Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your name"
+                required
+                className={inputClasses}
+                style={{
+                  color: theme === "dark" ? "#ffffff" : "#000000",
+                }}
+              />
             </div>
+
             <div>
               <label
                 htmlFor="message"
@@ -134,7 +139,6 @@ export const ContactSection: React.FC<{ className?: string }> = ({
                 required
                 className={inputClasses}
                 style={{
-                  // Ensure good text contrast in both themes
                   color: theme === "dark" ? "#ffffff" : "#000000",
                   minHeight: "150px",
                 }}
