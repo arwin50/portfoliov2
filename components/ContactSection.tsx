@@ -6,12 +6,15 @@ import { Github, Linkedin, Mail, Send, Instagram } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 import toast from "react-hot-toast";
 import emailjs from "@emailjs/browser";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export const ContactSection: React.FC<{ className?: string }> = ({
   className,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { theme } = useTheme();
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -35,6 +38,12 @@ export const ContactSection: React.FC<{ className?: string }> = ({
     e.preventDefault();
     setIsSubmitting(true);
 
+    if (!captchaToken) {
+      toast.error("Please verify the CAPTCHA");
+      setIsSubmitting(false);
+      return;
+    }
+
     if (!form.current) {
       console.error("Form reference is null");
       setIsSubmitting(false);
@@ -50,27 +59,25 @@ export const ContactSection: React.FC<{ className?: string }> = ({
           publicKey: `${process.env.NEXT_PUBLIC_EMAILJS_API_KEY}`,
         }
       )
-      .then(
-        () => {
-          toast.success("Message sent successfully! 🚀");
-
-          setFormData({
-            name: "",
-            email: "delasanarwin@gmail.com",
-            message: "",
-          });
-        },
-        (error) => {
-          console.error("FAILED...", error.text);
-          toast.error("Failed to send message. Please try again.");
-        }
-      )
+      .then(() => {
+        toast.success("Message sent successfully! 🚀");
+        setFormData({
+          name: "",
+          email: "delasanarwin@gmail.com",
+          message: "",
+        });
+        setCaptchaToken(null);
+        recaptchaRef.current?.reset();
+      })
+      .catch((error) => {
+        console.error("FAILED...", error.text);
+        toast.error("Failed to send message. Please try again.");
+      })
       .finally(() => {
         setIsSubmitting(false);
       });
   };
 
-  // Define input styles with better contrast for both themes
   const inputClasses = `
     bg-card-background 
     border-2 
@@ -144,6 +151,12 @@ export const ContactSection: React.FC<{ className?: string }> = ({
                 }}
               />
             </div>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+              onChange={(token) => setCaptchaToken(token)}
+              theme={theme === "dark" ? "dark" : "light"}
+            />
             <button
               type="submit"
               className="w-full px-8 py-2 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white rounded-md flex justify-center items-center cursor-pointer transition-colors duration-300 hover:animate-pulse-scale"
