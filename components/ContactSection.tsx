@@ -156,6 +156,7 @@ export const ContactSection: React.FC<{ className?: string }> = ({
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
               onChange={(token) => setCaptchaToken(token)}
               theme={theme === "dark" ? "dark" : "light"}
+              
             />
             <button
               type="submit"
