@@ -86,7 +86,7 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
     <>
       {/* Desktop Nav */}
       <nav
-        className={`hidden md:flex flex-col mr-5 gap-4 justify-evenly items-end p-2 text-muted-foreground fixed z-10 top-1/2 right-0 transform -translate-y-1/2 text-sm ${className}`}
+        className={`hidden md:flex flex-col mr-5 gap-4 justify-evenly items-end p-2 text-muted-foreground fixed z-50 top-1/2 right-0 transform -translate-y-1/2 text-sm ${className}`}
       >
         {navLinks.map((link) => (
           <Link

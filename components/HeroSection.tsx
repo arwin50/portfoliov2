@@ -20,7 +20,7 @@ export const HeroSection: React.FC<AnimationProps> = ({ className }) => {
       {/* Grid background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--muted)_1px,transparent_1px),linear-gradient(to_bottom,var(--muted)_1px,transparent_1px)] bg-[size:24px_24px]" />
 
-      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 lg:gap-24 w-[90%] max-w-[1100px]">
+      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-10 md:gap-10 lg:gap-24 w-[90%] max-w-[1100px] md:pr-16 lg:pr-0">
         {/* Left — text */}
         <div className="flex flex-col gap-4 w-full md:flex-1 text-center md:text-left items-center md:items-start">
           <p className="text-xs md:text-sm tracking-[0.25em] uppercase text-muted-foreground font-medium">
@@ -49,7 +49,7 @@ export const HeroSection: React.FC<AnimationProps> = ({ className }) => {
 
         {/* Right — photo */}
         <div className="flex justify-center shrink-0">
-          <div className="relative w-[220px] h-[270px] md:w-[280px] md:h-[340px] lg:w-[320px] lg:h-[390px] rounded-2xl overflow-hidden border border-border">
+          <div className="relative w-[220px] h-[270px] md:w-[240px] md:h-[295px] lg:w-[320px] lg:h-[390px] rounded-2xl overflow-hidden border border-border">
             <Image
               src="/gradpic.jpeg"
               alt="Arwin Delasan"
