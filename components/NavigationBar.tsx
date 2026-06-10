@@ -16,7 +16,7 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
   const handleScroll = useCallback(() => {
     if (isScrolling) return;
 
-    const sections = ["about", "skills", "projects", "contact"];
+    const sections = ["about", "services", "experience", "projects", "contact"];
     const scrollPosition = window.scrollY;
 
     let maxVisibleSection = "";
@@ -79,7 +79,8 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
     };
   }, [handleScroll]);
 
-  const navLinks = ["about", "skills", "projects", "contact"];
+  const navLinks = ["about", "skills", "experience", "projects", "contact"];
+  const navLabels: Record<string, string> = { skills: "Services" };
 
   return (
     <>
@@ -98,9 +99,17 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
                 : "hover:text-foreground/80"
             }`}
           >
-            {link.charAt(0).toUpperCase() + link.slice(1)}
+            {navLabels[link] ?? link.charAt(0).toUpperCase() + link.slice(1)}
           </Link>
         ))}
+        <a
+          href="/Delasan_Resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition-all duration-300 hover:text-foreground/80 text-rose-400 hover:text-rose-300 font-medium"
+        >
+          Resume
+        </a>
       </nav>
 
       {/* Theme Toggle - Desktop */}
@@ -140,9 +149,18 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
                 activeLink === link ? "font-bold underline" : ""
               }`}
             >
-              {link.charAt(0).toUpperCase() + link.slice(1)}
+              {navLabels[link] ?? link.charAt(0).toUpperCase() + link.slice(1)}
             </Link>
           ))}
+          <a
+            href="/Delasan_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+            className="text-rose-400 font-medium"
+          >
+            Resume
+          </a>
         </div>
       )}
     </>

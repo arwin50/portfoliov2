@@ -2,15 +2,21 @@
 import { useEffect } from "react";
 import { HeroSection } from "@/components/HeroSection";
 import { SkillsSection } from "@/components/SkillsSection";
+import { ExperienceSection } from "@/components/ExperienceSection";
 import { ProjectSection } from "@/components/ProjectSection";
 import { ContactSection } from "@/components/ContactSection";
 import { NavigationBar } from "@/components/NavigationBar";
+import { ChatWidget } from "@/components/ChatWidget";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
 
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
+    // Always start at the top on load/refresh
+    history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+
     // Animate the "niw" element
     const niwElement = document.getElementById("niw");
 
@@ -54,7 +60,7 @@ export default function Home() {
             stagger: 0.3, // Add a slight stagger between section fades
           });
         },
-      }
+      },
     );
   }, []);
 
@@ -72,8 +78,10 @@ export default function Home() {
       <NavigationBar className="section opacity-0" />
       <HeroSection className="section opacity-0" />
       <SkillsSection className="section opacity-0" />
+      <ExperienceSection className="section opacity-0" />
       <ProjectSection className="section opacity-0" />
       <ContactSection className="section opacity-0" />
+      <ChatWidget />
     </main>
   );
 }

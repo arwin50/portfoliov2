@@ -1,11 +1,11 @@
 "use client";
 
 import type React from "react";
+import Image from "next/image";
 import type { AnimationProps } from "@/app/interface";
 
 export const HeroSection: React.FC<AnimationProps> = ({ className }) => {
   const handleScroll = () => {
-    console.log("Scroll to contact section");
     const contactSection = document.getElementById("contact");
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: "smooth" });
@@ -17,28 +17,47 @@ export const HeroSection: React.FC<AnimationProps> = ({ className }) => {
       className={`h-screen text-foreground ${className} w-full relative flex justify-center items-center`}
       id="about"
     >
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--muted)_1px,transparent_1px),linear-gradient(to_bottom,var(--muted)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-      <div className="flex flex-col justify-center items-center gap-2 w-[80%] max-w-[1200px] text-center">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6">
-          Hello, I'm{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-500">
-            Arwin Delasan.
-          </span>
-        </h1>
-        <p className="text-xl md:text-2xl lg:text-3xl">
-          A Full Stack Developer who loves{" "}
-          <span className="text-red-400">building</span>,{" "}
-          <span className="italic">learning</span>, and{" "}
-          <span className="font-bold">solving</span> real-world problems with
-          code.
-        </p>  
-        {/* Connect Button */}
-        <button
-          onClick={handleScroll}
-          className="w-fit mt-4 py-3 px-6 text-xl font-semibold text-white bg-gradient-to-r from-rose-500 to-orange-500 rounded-full hover:bg-gradient-to-l transition-all duration-500 cursor-pointer z-10 hover:animate-pulse-scale"
-        >
-          Connect
-        </button>
+      {/* Grid background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--muted)_1px,transparent_1px),linear-gradient(to_bottom,var(--muted)_1px,transparent_1px)] bg-[size:24px_24px]" />
+
+      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 lg:gap-24 w-[90%] max-w-[1100px]">
+        {/* Left — text */}
+        <div className="flex flex-col gap-4 w-full md:flex-1 text-center md:text-left items-center md:items-start">
+          <p className="text-xs md:text-sm tracking-[0.25em] uppercase text-muted-foreground font-medium">
+            Full Stack Developer &amp; AI Automation Specialist
+          </p>
+
+          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
+            Hello, I&apos;m{" "}
+            <p className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-500">
+              Arwin Delasan.
+            </p>
+          </h1>
+
+          <p className="text-base md:text-lg text-muted-foreground max-w-md">
+            I build, learn, and solve real-world problems with code — from
+            full-stack web apps to AI-powered automation pipelines.
+          </p>
+
+          <button
+            onClick={handleScroll}
+            className="w-fit mt-2 py-2.5 px-6 text-sm font-semibold border border-foreground text-foreground rounded-md hover:bg-foreground hover:text-background transition-all duration-300 cursor-pointer"
+          >
+            Connect
+          </button>
+        </div>
+
+        {/* Right — photo */}
+        <div className="flex justify-center shrink-0">
+          <div className="relative w-[220px] h-[270px] md:w-[280px] md:h-[340px] lg:w-[320px] lg:h-[390px] rounded-2xl overflow-hidden border border-border">
+            <Image
+              src="/gradpic.jpeg"
+              alt="Arwin Delasan"
+              fill
+              className="object-cover object-top"
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

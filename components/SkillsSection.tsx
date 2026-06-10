@@ -8,8 +8,24 @@ import { FaReact, FaNodeJs, FaHtml5, FaVuejs } from "react-icons/fa";
 import { CgFigma } from "react-icons/cg";
 import { RiNextjsFill } from "react-icons/ri";
 import { BiLogoPostgresql } from "react-icons/bi";
-import { SiMysql } from "react-icons/si";
+import { SiMysql, SiOpenai, SiZapier, SiN8N, SiClaude } from "react-icons/si";
 import { TbBrandMongodb } from "react-icons/tb";
+
+// Placeholder for tools not yet in react-icons.
+// w/h = 1em so it scales with the parent font-size, matching real icon dimensions.
+const LogoPlaceholder = ({
+  label,
+  className,
+}: {
+  label: string;
+  className: string;
+}) => (
+  <span
+    className={`inline-flex items-center justify-center w-[1em] h-[1em] rounded-[0.12em] border-2 border-current font-black text-[0.26em] tracking-tight leading-none shrink-0 ${className}`}
+  >
+    {label}
+  </span>
+);
 
 export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
   const marqueeRef = useRef<HTMLDivElement>(null);
@@ -17,15 +33,15 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
   useEffect(() => {
     const marquee = marqueeRef.current;
     if (marquee) {
-      const originalIcons = marquee.innerHTML;
-      marquee.innerHTML = originalIcons + originalIcons;
+      const originalContent = marquee.innerHTML;
+      marquee.innerHTML = originalContent + originalContent;
 
       const halfWidth = marquee.scrollWidth / 2;
 
       const tl = gsap.timeline({ repeat: -1 });
       tl.to(marquee, {
         x: -halfWidth,
-        duration: 20,
+        duration: 22,
         ease: "linear",
         onComplete: () => {
           gsap.set(marquee, { x: 0 });
@@ -45,24 +61,18 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
     >
       <div className="w-[90%] xl:w-[80%] flex-col py-12 px-4 md:px-12 space-y-10">
         <div className="flex flex-col gap-12 w-full items-center">
-          <p className="text-4xl md:text-5xl xl:text-6xl font-bold">{`{Skills}`}</p>
+          <p className="text-4xl md:text-5xl xl:text-6xl font-bold">{`Services`}</p>
+
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 w-full">
             {/* Front-End */}
             <div className="flex flex-col items-center gap-4">
               <div className="relative flex justify-center h-[200px] md:h-[250px] lg:h-[300px]">
                 <Image
-                  src="/Monitor_white.svg"
-                  alt="monitor"
-                  width={300}
+                  src="/frontend.png"
+                  alt="frontend"
+                  width={400}
                   height={300}
-                  className="h-full w-auto "
-                />
-                <Image
-                  src="/carbon-2.png"
-                  alt="frontend-code"
-                  width={282}
-                  height={300}
-                  className="absolute top-2 h-[60%] w-[94%] lg:h-[185px]"
+                  className="h-full w-full scale-90 md:scale-110 lg:scale-150 object-contain"
                 />
               </div>
               <div className="flex flex-col items-center gap-4 justify-center px-2 text-center">
@@ -77,50 +87,43 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
               </div>
             </div>
 
-            {/* Coding Approach */}
+            {/* AI Automation */}
             <div className="flex flex-col items-center gap-4">
-              <div className="flex justify-center h-[200px] md:h-[250px] lg:h-[300px]">
-                <Image
-                  src="/jigsaw.png"
-                  alt="others"
-                  width={280}
-                  height={280}
-                  className="h-full w-auto scale-90 self-start "
-                />
+              <div className="flex justify-center items-center h-[200px] md:h-[250px] lg:h-[300px]">
+                <div className="flex justify-center h-[160px] md:h-[200px] lg:h-[240px]">
+                  <SiN8N
+                    width={200}
+                    height={200}
+                    className="h-full w-auto scale-90 self-start text-pink-900"
+                  />
+                </div>
               </div>
               <div className="flex flex-col items-center gap-4 px-2 text-center">
-                <p className="text-xl md:text-2xl font-bold">Coding Approach</p>
+                <p className="text-xl md:text-2xl font-bold">AI Automation</p>
                 <p className="text-muted-foreground text-sm">
-                  I'm comfortable working in agile environments and adapting
-                  quickly to changes. I focus on writing responsive and clean,
-                  efficient code.
+                  Designing and deploying AI-powered automation pipelines using
+                  n8n, LLM APIs, RAG systems, and voice agents to eliminate
+                  manual workflows.
                 </p>
               </div>
             </div>
 
             {/* Back-End */}
-            <div className="md:col-span-2 md:flex md:justify-center xl:col-span-1 flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-4">
               <div className="relative flex justify-center h-[200px] md:h-[250px] lg:h-[300px]">
                 <Image
-                  src="/Monitor_white.svg"
-                  alt="monitor"
-                  width={300}
+                  src="/back.png"
+                  alt="backend"
+                  width={400}
                   height={300}
-                  className="h-full w-auto "
-                />
-                <Image
-                  src="/backend.png"
-                  alt="backend-code"
-                  width={282}
-                  height={300}
-                  className="absolute top-2 h-[60%] w-[94%] lg:h-[185px]"
+                  className="h-full w-full scale-90 md:scale-110 lg:scale-150 object-contain"
                 />
               </div>
               <div className="flex flex-col items-center gap-4 px-2 text-center">
                 <p className="text-xl md:text-2xl font-bold">
                   Back-end Development
                 </p>
-                <p className="text-muted-foreground text-sm md:w-[65%] lg:w-auto">
+                <p className="text-muted-foreground text-sm">
                   I build and maintain server-side logic using Node.js and
                   Express, with MongoDB and MySQL database management.
                 </p>
@@ -129,26 +132,29 @@ export const SkillsSection: React.FC<AnimationProps> = ({ className }) => {
           </div>
         </div>
 
-        {/* Marquee */}
-        <div className="flex items-center mt-8 w-full gap-6">
+        {/* Marquee — font-size on the container so every child (icon or
+            placeholder) inherits the same em baseline → uniform gap spacing */}
+        <div className="flex items-center mt-8 w-full">
           <div className="relative flex-1 overflow-hidden h-[60px] md:h-[70px] xl:h-[80px]">
             <div
               ref={marqueeRef}
-              className="tech-icons whitespace-nowrap flex gap-12 text-3xl md:text-4xl xl:text-5xl absolute left-0 top-0"
+              className="text-3xl md:text-4xl xl:text-5xl whitespace-nowrap flex gap-12 items-center absolute left-0 top-0 h-full"
             >
-              {[...Array(4)].map((_, i) => (
-                <React.Fragment key={i}>
-                  <FaReact className="text-cyan-400" />
-                  <CgFigma className="text-pink-500" />
-                  <FaNodeJs className="text-green-500" />
-                  <RiNextjsFill className="text-foreground" />
-                  <FaHtml5 className="text-orange-500" />
-                  <FaVuejs className="text-green-400" />
-                  <TbBrandMongodb className="text-green-500" />
-                  <BiLogoPostgresql className="text-blue-500" />
-                  <SiMysql className="text-blue-500" />
-                </React.Fragment>
-              ))}
+              {/* Dev stack — real icons */}
+              <FaReact className="text-cyan-400 shrink-0" />
+              <CgFigma className="text-pink-500 shrink-0" />
+              <FaNodeJs className="text-green-500 shrink-0" />
+              <RiNextjsFill className="text-foreground shrink-0" />
+              <FaHtml5 className="text-orange-500 shrink-0" />
+              <FaVuejs className="text-green-400 shrink-0" />
+              <TbBrandMongodb className="text-green-500 shrink-0" />
+              <BiLogoPostgresql className="text-blue-500 shrink-0" />
+              <SiMysql className="text-blue-500 shrink-0" />
+              {/* AI tools — real icons where available, placeholders otherwise */}
+              <SiClaude className="text-orange-300 shrink-0" />
+              <SiOpenai className="text-green-400 shrink-0" />
+              <SiN8N className="text-pink-900" />
+              <SiZapier className="text-orange-400 shrink-0" />
             </div>
           </div>
         </div>

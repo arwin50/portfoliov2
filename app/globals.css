@@ -42,6 +42,9 @@ body {
 
 /* Add Tailwind utilities for muted colors */
 @layer utilities {
+  .bg-background {
+    background-color: var(--background);
+  }
   .bg-muted {
     background-color: var(--muted);
   }
