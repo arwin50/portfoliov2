@@ -3,7 +3,13 @@
 import { useState, useEffect } from "react";
 import type React from "react";
 import type { AnimationProps } from "@/app/interface";
-import { ExternalLink, Github, ChevronLeft, ChevronRight, X } from "lucide-react";
+import {
+  ExternalLink,
+  Github,
+  ChevronLeft,
+  ChevronRight,
+  X,
+} from "lucide-react";
 
 interface Project {
   title: string;
@@ -89,10 +95,7 @@ const automationProjects: Project[] = [
     description:
       "Accepts a content idea, target platforms, and posting date via Excel, then generates tailored posts and schedules them automatically across channels.",
     image: "/social media automation poster.png",
-    images: [
-      "/social media automation poster.png",
-      "/content maker.png",
-    ],
+    images: ["/social media automation poster.png", "/content maker.png"],
     tags: ["n8n", "Excel", "AI", "Content Generation"],
     workflowSteps: [
       "User fills in an Excel sheet with the content idea, target platforms, and desired posting date",
@@ -106,7 +109,7 @@ const automationProjects: Project[] = [
     description:
       "Captures leads from a GoHighLevel form and triggers a VAPI voice agent that calls to qualify them — asking about business needs and booking discovery calls on the spot.",
     image: "/Lead Intake.png",
-    tags: ["GoHighLevel", "VAPI", "Voice AI"],
+    tags: ["n8n", "GoHighLevel", "VAPI", "Voice AI"],
     workflowSteps: [
       "Lead submits their information through a GoHighLevel intake form",
       "n8n detects the new submission and immediately triggers a VAPI voice agent",
@@ -119,10 +122,7 @@ const automationProjects: Project[] = [
     description:
       "Prepares structured agendas and talking points before each call, then analyzes the transcript afterward to surface key takeaways and next steps.",
     image: "/ai appointment prep.png",
-    images: [
-      "/ai appointment prep.png",
-      "/postcall analysis.png",
-    ],
+    images: ["/ai appointment prep.png", "/postcall analysis.png"],
     tags: ["AI", "Transcription", "n8n"],
     workflowSteps: [
       "Pre-call: Upcoming meetings are pulled from the calendar and fed into the workflow",
@@ -136,7 +136,7 @@ const automationProjects: Project[] = [
     description:
       "An AI-powered chatbot for Facebook and Instagram that handles DMs, answers common questions, and keeps followers engaged around the clock.",
     image: "/chatbot.png",
-    tags: ["Facebook", "Instagram", "AI", "Chatbot"],
+    tags: ["n8n", "Facebook", "Instagram", "AI", "Chatbot"],
     workflowSteps: [
       "A DM is received on Facebook or Instagram and triggers the workflow",
       "AI reads the message and determines the user's intent and context",
@@ -149,8 +149,15 @@ const automationProjects: Project[] = [
     description:
       "A team coordination web app combining the best of Slack and Jira — with an AI assistant that can create and assign tasks, Kanban boards for project tracking, and real-time team messaging.",
     image: "/katcon.png",
-    video: "/katconvid.mp4",
-    tags: ["AI Chat", "Kanban", "Real-time Messaging", "Team Coordination"],
+    video:
+      "https://res.cloudinary.com/dxiuysrao/video/upload/v1781189920/katconvid_dawicm.mp4",
+    tags: [
+      "n8n",
+      "AI Chat",
+      "Supabase",
+      "Real-time Messaging",
+      "Team Coordination",
+    ],
     workflowSteps: [
       "Team members send natural language requests to the AI assistant to create or assign tasks",
       "The AI parses intent, sets priorities, and routes task assignments to the right person",
@@ -176,7 +183,9 @@ export const ProjectSection: React.FC<AnimationProps> = ({ className }) => {
 
   useEffect(() => {
     document.body.style.overflow = selectedProject ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [selectedProject]);
 
   return (
@@ -225,7 +234,11 @@ export const ProjectSection: React.FC<AnimationProps> = ({ className }) => {
             <ProjectCard
               key={`${activeTab}-${index}`}
               project={project}
-              onOpen={activeTab === "automation" ? () => setSelectedProject(project) : undefined}
+              onOpen={
+                activeTab === "automation"
+                  ? () => setSelectedProject(project)
+                  : undefined
+              }
             />
           ))}
         </div>
@@ -241,7 +254,10 @@ export const ProjectSection: React.FC<AnimationProps> = ({ className }) => {
   );
 };
 
-const ProjectCard: React.FC<{ project: Project; onOpen?: () => void }> = ({ project, onOpen }) => {
+const ProjectCard: React.FC<{ project: Project; onOpen?: () => void }> = ({
+  project,
+  onOpen,
+}) => {
   const slides = project.images ?? [project.image];
   const [imgIndex, setImgIndex] = useState(0);
   const hasMultiple = slides.length > 1;
@@ -299,7 +315,10 @@ const ProjectCard: React.FC<{ project: Project; onOpen?: () => void }> = ({ proj
               {slides.map((_, i) => (
                 <button
                   key={i}
-                  onClick={(e) => { e.stopPropagation(); setImgIndex(i); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setImgIndex(i);
+                  }}
                   className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
                     i === imgIndex ? "bg-white scale-125" : "bg-white/50"
                   }`}
@@ -361,7 +380,10 @@ const ProjectCard: React.FC<{ project: Project; onOpen?: () => void }> = ({ proj
   );
 };
 
-const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ project, onClose }) => {
+const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({
+  project,
+  onClose,
+}) => {
   const slides = project.images ?? [project.image];
   const [imgIndex, setImgIndex] = useState(0);
   const hasMultiple = slides.length > 1;
@@ -404,7 +426,11 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
               {hasMultiple && (
                 <>
                   <button
-                    onClick={() => setImgIndex((i) => (i - 1 + slides.length) % slides.length)}
+                    onClick={() =>
+                      setImgIndex(
+                        (i) => (i - 1 + slides.length) % slides.length,
+                      )
+                    }
                     className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 transition-colors"
                     aria-label="Previous image"
                   >
@@ -453,7 +479,9 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center text-xs font-bold">
                       {i + 1}
                     </span>
-                    <span className="text-muted-foreground leading-relaxed pt-0.5">{step}</span>
+                    <span className="text-muted-foreground leading-relaxed pt-0.5">
+                      {step}
+                    </span>
                   </li>
                 ))}
               </ol>
@@ -462,7 +490,10 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
 
           <div className="flex flex-wrap gap-2">
             {project.tags.map((tag, i) => (
-              <span key={i} className="text-xs bg-muted text-foreground px-2 py-1 rounded-full">
+              <span
+                key={i}
+                className="text-xs bg-muted text-foreground px-2 py-1 rounded-full"
+              >
                 {tag}
               </span>
             ))}
