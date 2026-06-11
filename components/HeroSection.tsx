@@ -14,7 +14,7 @@ export const HeroSection: React.FC<AnimationProps> = ({ className }) => {
 
   return (
     <section
-      className={`h-screen text-foreground ${className} w-full relative flex justify-center items-center`}
+      className={`h-screen text-foreground ${className} w-full relative flex justify-center items-center pt-16`}
       id="about"
     >
       {/* Grid background */}
