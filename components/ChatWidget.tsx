@@ -25,8 +25,25 @@ export const ChatWidget = () => {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [sessionId] = useState(() => crypto.randomUUID());
+  const [cooldownLeft, setCooldownLeft] = useState(0);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const messageTimes = useRef<number[]>([]);
+
+  const RATE_LIMIT = 5;
+  const WINDOW_MS = 30_000;
+  const COOLDOWN_MS = 15_000;
+  const cooldownUntil = useRef(0);
+
+  useEffect(() => {
+    if (cooldownLeft <= 0) return;
+    const t = setInterval(() => {
+      const left = Math.ceil((cooldownUntil.current - Date.now()) / 1000);
+      if (left <= 0) { setCooldownLeft(0); clearInterval(t); }
+      else setCooldownLeft(left);
+    }, 500);
+    return () => clearInterval(t);
+  }, [cooldownLeft]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -38,7 +55,16 @@ export const ChatWidget = () => {
 
   const sendMessage = async () => {
     const text = input.trim();
-    if (!text || isTyping) return;
+    if (!text || isTyping || cooldownLeft > 0) return;
+
+    const now = Date.now();
+    messageTimes.current = messageTimes.current.filter((t) => now - t < WINDOW_MS);
+    if (messageTimes.current.length >= RATE_LIMIT) {
+      cooldownUntil.current = now + COOLDOWN_MS;
+      setCooldownLeft(Math.ceil(COOLDOWN_MS / 1000));
+      return;
+    }
+    messageTimes.current.push(now);
     setInput("");
 
     setMessages((prev) => [
@@ -170,13 +196,14 @@ export const ChatWidget = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value.slice(0, MAX_CHARS))}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-                placeholder="Type your message..."
+                placeholder={cooldownLeft > 0 ? "Slow down a bit..." : "Type your message..."}
                 maxLength={MAX_CHARS}
-                className="flex-1 bg-muted text-foreground text-sm px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-500/40 placeholder:text-muted-foreground/50"
+                disabled={cooldownLeft > 0}
+                className="flex-1 bg-muted text-foreground text-sm px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-500/40 placeholder:text-muted-foreground/50 disabled:opacity-50 disabled:cursor-not-allowed"
               />
               <button
                 onClick={sendMessage}
-                disabled={!input.trim() || isTyping}
+                disabled={!input.trim() || isTyping || cooldownLeft > 0}
                 aria-label="Send"
                 className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shrink-0"
               >
@@ -184,7 +211,11 @@ export const ChatWidget = () => {
               </button>
             </div>
             <div className="flex items-center justify-between px-1">
-              <p className="text-[10px] text-muted-foreground/50">Press Enter to send</p>
+              {cooldownLeft > 0 ? (
+                <p className="text-[10px] text-rose-400">Too many messages — wait {cooldownLeft}s</p>
+              ) : (
+                <p className="text-[10px] text-muted-foreground/50">Press Enter to send</p>
+              )}
               <p className={`text-[10px] tabular-nums ${input.length >= MAX_CHARS ? "text-rose-400" : "text-muted-foreground/50"}`}>
                 {input.length}/{MAX_CHARS}
               </p>

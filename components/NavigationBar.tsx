@@ -12,6 +12,27 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
   const [activeLink, setActiveLink] = useState("about");
   const [isScrolling, setIsScrolling] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileControlsTop, setMobileControlsTop] = useState<number | null>(null);
+
+  useEffect(() => {
+    const sync = () => {
+      const niw = document.getElementById("niw");
+      if (!niw) return;
+      const rect = niw.getBoundingClientRect();
+      setMobileControlsTop(rect.top + rect.height / 2);
+    };
+    // GSAP finishes after ~3s; poll until the logo has settled
+    const id = setInterval(() => {
+      const niw = document.getElementById("niw");
+      if (!niw) return;
+      const rect = niw.getBoundingClientRect();
+      if (rect.top > 0 && rect.top < window.innerHeight * 0.15) {
+        sync();
+        clearInterval(id);
+      }
+    }, 100);
+    return () => clearInterval(id);
+  }, []);
 
   const handleScroll = useCallback(() => {
     if (isScrolling) return;
@@ -135,11 +156,12 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
 
       {/* ── Mobile top bar ── */}
       <div
-        className={`md:hidden flex items-center justify-between fixed top-0 left-0 right-0 z-50 px-5 py-4 ${className}`}
+        className={`md:hidden fixed top-0 left-0 right-0 z-50 ${className}`}
       >
-        {/* Spacer for {niw} */}
-        <div className="w-16" />
-        <div className="flex items-center gap-3">
+        <div
+          className="absolute right-5 flex items-center gap-3 -translate-y-1/2"
+          style={{ top: mobileControlsTop ?? "calc(5% + 1rem)" }}
+        >
           <ThemeToggle />
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
