@@ -15,23 +15,14 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
   const [mobileControlsTop, setMobileControlsTop] = useState<number | null>(null);
 
   useEffect(() => {
-    const sync = () => {
+    // GSAP: 1s first anim + 1s delay + 1s second anim = 3s total. Read after it settles.
+    const id = setTimeout(() => {
       const niw = document.getElementById("niw");
       if (!niw) return;
       const rect = niw.getBoundingClientRect();
-      setMobileControlsTop(rect.top + rect.height / 2);
-    };
-    // GSAP finishes after ~3s; poll until the logo has settled
-    const id = setInterval(() => {
-      const niw = document.getElementById("niw");
-      if (!niw) return;
-      const rect = niw.getBoundingClientRect();
-      if (rect.top > 0 && rect.top < window.innerHeight * 0.15) {
-        sync();
-        clearInterval(id);
-      }
-    }, 100);
-    return () => clearInterval(id);
+      if (rect.height > 0) setMobileControlsTop(rect.top + rect.height / 2);
+    }, 3200);
+    return () => clearTimeout(id);
   }, []);
 
   const handleScroll = useCallback(() => {
@@ -160,7 +151,7 @@ export const NavigationBar: React.FC<AnimationProps> = ({ className }) => {
       >
         <div
           className="absolute right-5 flex items-center gap-3 -translate-y-1/2"
-          style={{ top: mobileControlsTop ?? "calc(5% + 1rem)" }}
+          style={{ top: mobileControlsTop ?? "calc(5% + 1.5rem)" }}
         >
           <ThemeToggle />
           <button
